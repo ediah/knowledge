@@ -8,7 +8,7 @@ jobs:
       - name: Установка инструментов
         run: sudo apt install -y latexila latexila-data texlive-lang-cyrillic
       - name: Сборка всех документов
-        run: sh ./compile.sh
+        run: bash ./compile.sh
       - name: Загрузка
         run: |
           git config --global user.name 'ediah'
