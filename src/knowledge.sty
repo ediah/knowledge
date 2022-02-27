@@ -1,0 +1,48 @@
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{mathtext}
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+\usepackage{tikz}
+\usepackage{cmap}
+\usepackage{fancyhdr}
+
+\newtheorem{theorem}{Теорема}
+\addto\captionsrussian{\renewcommand{\chaptername}{Часть}}
+
+\newcounter{task}
+\newcommand{\task}{
+	\addtocounter{task}{1}
+	\par\noindent\textbf{Задача \arabic{section}.\arabic{task} }
+}
+
+\pagestyle{fancy}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+\fancyhf{}
+\fancyhead[LE,RO]{\bfseries\thepage}
+\fancyhead[LO]{\bfseries\leftmark}
+\fancyhead[RE]{\bfseries\rightmark}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0pt}
+\addtolength{\headheight}{0.5pt}
+\fancypagestyle{plain}{
+   \fancyhead{}
+   \renewcommand{\headrulewidth}{0pt}
+}
+
+\makeatletter
+\renewcommand\chapter{
+	\par
+	\@afterindentfalse \secdef\@chapter\@schapter
+}
+\makeatother  
+
+\makeatletter
+\renewcommand\section{
+	\setcounter{task}{0}
+	\@startsection {section}{1}{\z@}
+		{-3.5ex \@plus -1ex \@minus -.2ex}
+		{2.3ex \@plus.2ex}
+		{\normalfont\Large\bfseries}
+}
+\makeatother
