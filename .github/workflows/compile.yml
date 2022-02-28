@@ -6,7 +6,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Установка инструментов
-        run: sudo apt install -y latexila latexila-data texlive-lang-cyrillic texlive-pictures
+        run: sudo apt install -y latexila latexila-data texlive-lang-cyrillic texlive-pictures texlive-latex-extra
       - name: Сборка всех документов
         run: bash ./compile.sh
       - name: Загрузка
