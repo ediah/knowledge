@@ -4,7 +4,7 @@
 \title{Математические основы криптологии}
 \author{Автор курса: Применко Эдуард Андреевич \\ 
 		Составитель: Смирнов Дмитрий Константинович}
-\date{2022 г.}
+\date{Версия от \currenttime, \today}
 
 \begin{document}
 
@@ -81,6 +81,8 @@ $$ a = h ^ { \frac{\phi(p ^ 2)}{k} } = 15 ^ { \frac{22 * 23}{22} } = 15 ^ {23} =
 
 \medskip
 
+\noindent \textbf{I. Алгоритм согласования }
+
 1. Убедимся в том, что $a=2$ -- примитивный элемент группы $\mathbb{Z}_{701}$.
 $$\phi(701) = 700 = 2^2 \cdot 5^2 \cdot 7$$
 $$ g^{ \frac{\phi(p)}{2} } = 2 ^ {350} = 700 \not\equiv 1 \pmod p,$$
@@ -152,6 +154,87 @@ $ba^j$ & 483 & 265 & 530 & 359 & 17 & 34 & 68 & 136 & 272 & 544 & 387 & 73 & 146
 \noindent В таблицах совпадают элементы под номерами $i = 22$ и $j = 2.$
 
 5. Таким образом, $x = mi - j = 27 \cdot 22 - 2 = 592.$ 
+
+\noindent Ответ: $x = 592$.
+
+\newpage
+
+\noindent \textbf{II. Алгоритм Полига-Хеллмана}
+
+Порядок поля $\mathbb{Z}_{701}$ равен $N = \phi(701) = 700 = 2 ^ 2 \cdot 5 ^ 2 \cdot 7$. Количество простых множителей в разложении этого числа $t = 3$.
+
+1. Вычисляем матрицу с элементами $(i, j) = a ^ { j  \frac{N}{p_i}} $, $i = \overline{1, t},\ j =~\overline{0, p_i - 1}$:
+
+\medskip
+
+{\centering
+\begin{tabular}{||c|c|c|c|c|c|c|c||}
+\hline
+\diagbox{$p_i$}{$j$} & 0 & 1 & 2 & 3 & 4 & 5 & 6 \\
+\hline
+
+2 & $2 ^ {0 \cdot \frac{700}{2} }$ & $2 ^ {1 \cdot \frac{700}{2} }$ & - & - & - & - & -\\
+
+\hline
+5 & $2 ^ {0 \cdot \frac{700}{5} }$ & $2 ^ {1 \cdot \frac{700}{5} }$ & $2 ^ {2 \cdot \frac{700}{5} }$ & $2 ^ {3 \cdot \frac{700}{5} }$ & $2 ^ {4 \cdot \frac{700}{5} }$ & - & -\\
+\hline
+7 & $2 ^ {0 \cdot \frac{700}{7} }$ & $2 ^ {1 \cdot \frac{700}{7} }$ & $2 ^ {2 \cdot \frac{700}{7} }$ & $2 ^ {3 \cdot \frac{700}{7} }$ & $2 ^ {4 \cdot \frac{700}{7} }$ & $2 ^ {5 \cdot \frac{700}{7} }$ & $2 ^ {6 \cdot \frac{700}{7} }$ \\
+\hline
+\end{tabular}
+
+}
+
+\medskip
+
+{\centering
+\begin{tabular}{||c|c|c|c|c|c|c|c||}
+\hline
+\diagbox{$p_i$}{$j$} & 0 & 1 & 2 & 3 & 4 & 5 & 6 \\
+\hline
+
+2 & 1 & 700 & - & - & - & - & -\\
+
+\hline
+5 & 1 & 210 & 638 & 89 & 464 & - & -\\
+\hline
+7 & 1 & 19 & 361 & 550 & 636 & 167 & 369 \\
+\hline
+\end{tabular}
+
+}
+
+\medskip
+
+2. Далее находим  $x_i = \log_a b \pmod { p_i^{k_i} } = \gamma_0 + \gamma_1 p_i + ... + \gamma_{k_i - 1} p_i ^ {k_i - 1}, \gamma_j \in~\mathbb{Z}_p$. Последовательно находим $\gamma_j$ из $ M(p, \gamma_{j}) = b_j ^ { \frac{N}{p ^ {j + 1}} }$, где $b_j = ba^{-\gamma_0 - \gamma_1 p - ... - \gamma_{j - 1} p ^ {j - 1}}$, а $M$ -- определённая выше матрица.
+
+а) $x_1 = \log_2 163 \pmod { 2^2 }, \ p = 2, \ k = 2$
+
+\noindent $M(p, \gamma_0) = b ^ { \frac{N}{p} } = 163 ^ { \frac{700}{2} } = 1 \Rightarrow \gamma_0 = 0, \ b_1 = ba^{-\gamma_0} = 163 \cdot 2 ^ {-0} = 163$
+
+\noindent $M(p, \gamma_1) = b_1 ^ { \frac{N}{p^2} } = 163 ^ { \frac{700}{4} } = 1 \Rightarrow \gamma_1 = 0$
+
+\noindent $\Rightarrow x_1 = \gamma_0 + \gamma_1 p = 0 + 0 \cdot 2 = 0$
+
+б) $x_2 = \log_2 163 \pmod { 5^2 }, \ p = 5, \ k = 2$
+
+\noindent $M(p, \gamma_0) = b ^ { \frac{N}{p} } = 163 ^ { \frac{700}{5} } = 638 \Rightarrow \gamma_0 = 2, \ b_1 = ba^{-\gamma_0} = 163 \cdot 2 ^ {-2} = 216$
+
+\noindent $M(p, \gamma_1) = b_1 ^ { \frac{N}{p^2} } = 216 ^ { \frac{700}{25} } = 89 \Rightarrow \gamma_1 = 3$
+
+\noindent $\Rightarrow x_2 = \gamma_0 + \gamma_1 p = 2 + 3 \cdot 5 = 17$
+
+в) $x_3 = \log_2 163 \pmod { 7 }, \ p = 7, \ k = 1$
+
+\noindent $M(p, \gamma_0) = b ^ { \frac{N}{p} } = 163 ^ { \frac{700}{7} } = 636 \Rightarrow \gamma_0 = 4$
+
+\noindent $\Rightarrow x_3 = \gamma_0 = 4$
+
+3. На основе вычисленных выше значений $x_1, x_2, ..., x_t$ и китайской теоремы об остатках находим искомый логарифм:
+
+$$x = \sum x_i \frac{N}{p_i^{k_i}} [ ( \frac{N}{p_i^{k_i}} ) ^ {-1} \!\!\!\!\pmod {p_i^{k_i}} ] \!\!\!\!\pmod N = 0 \cdot \frac{700}{2^2} [ (\frac{700}{2^2}) ^ {-1} \!\!\!\!\pmod {2^2}] + $$ 
+$$+ 17 \cdot \frac{700}{5^2} [ (\frac{700}{5^2}) ^ {-1} \!\!\!\!\pmod {5^2}] + 4 \cdot \frac{700}{7} [ (\frac{700}{7}) ^ {-1} \!\!\!\!\pmod 7]  \pmod {700} = $$
+$$ = 476 \cdot [ 28 ^ {-1} \!\!\!\!\pmod {25}] + 400 \cdot [100 ^ {-1} \!\!\!\!\pmod 7] \pmod {700} = $$
+$$ = 476 \cdot 17 + 400 \cdot 4 \pmod {700} = 592$$
 
 \noindent Ответ: $x = 592$.
 
