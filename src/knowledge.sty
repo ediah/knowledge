@@ -8,13 +8,22 @@
 \RequirePackage{datetime}
 \RequirePackage{diagbox}
 
-\newtheorem{theorem}{Теорема}
+\newcounter{thrm}
+\newcommand{\theorem}{
+	\addtocounter{thrm}{1}
+	\par\noindent\textbf{
+		Теорема \arabic{section}.\arabic{thrm}
+	}
+}
+
 \addto\captionsrussian{\renewcommand{\chaptername}{Часть}}
 
 \newcounter{task}
-\newcommand{\task}{
+\newcommand{\task}[1]{
 	\addtocounter{task}{1}
-	\par\noindent\textbf{Задача \arabic{section}.\arabic{task} }
+	\par\noindent\textbf{\\ Задача \arabic{section}.\arabic{task} }
+	#1
+	\par\noindent\textbf{Решение.}
 }
 
 \pagestyle{fancy}
