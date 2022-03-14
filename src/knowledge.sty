@@ -18,6 +18,27 @@
 	}
 }
 
+\newcounter{lmmt}
+\newcommand{\lemmata}{
+	\addtocounter{lmmt}{1}
+	\par\noindent\textbf{\\ Лемма \arabic{section}.\arabic{lmmt}}
+}
+
+\newcommand{\prove}[1]{
+
+	\noindent \begin{tikzpicture}
+		\filldraw    (0,   0) -- (0.3,  0  ) -- (0, -0.3);
+		\draw[thick] (0.3, 0) -- (0.3, -0.3) -- (0, -0.3);
+	\end{tikzpicture}
+	#1
+	\nopagebreak \begin{flushright}
+		\begin{tikzpicture}
+			\filldraw    (0, 0) -- (0.3, 0.3) -- (0.3, 0  );
+			\draw[thick] (0, 0) -- (0,   0.3) -- (0.3, 0.3);
+		\end{tikzpicture}
+	\end{flushright}
+}
+
 \addto\captionsrussian{\renewcommand{\chaptername}{Часть}}
 
 \newcounter{task}
@@ -26,6 +47,14 @@
 	\par\noindent\textbf{\\ Задача \arabic{section}.\arabic{task} }
 	#1
 	\par\noindent\textbf{Решение.}
+}
+
+\newcommand{\lege}[2]{
+	\left( \frac{#1}{#2} \right)
+}
+
+\newcommand{\gen}[1]{
+	\langle #1 \rangle
 }
 
 \pagestyle{fancy}
