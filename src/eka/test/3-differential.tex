@@ -1,0 +1,32 @@
+\section{Дифференциальный криптоанализ.}
+
+\task{$N$ -- количество слов длины $l$ в алфавите $A$, $n$ -- количество пар вариантов сообщений $M$ и $M'$, $p$ -- вероятность успешной атаки.
+
+Доказать теорему:
+Пусть $N, n \rightarrow \infty$, но $\frac{n^2}{N} \rightarrow t > 0$, тогда: $$p = (1 - e^{-t})(1 + o(1)).$$
+}
+
+Известно, что: $1 - p = \frac{\left[ (N-n)! \right] ^ 2}{N! (N-2n)!}$. Следовательно:
+
+\begin{multline*}
+p = 1 -  \frac{\left[ (N-n)! \right] ^ 2}{N! (N-2n)!} = \\ = 1 -  \frac{\left[ \left( \frac{N-n}{e} \right) ^ {N-n} \sqrt{2\pi(N-n)} (1 + \frac{1}{12(N-n)} + O \left(\frac{1}{(N-n)^2} \right)) \right] ^ 2}{\left( \frac{N}{e} \right) ^ {N} \sqrt{2\pi N} (1 + \frac{1}{12N} + O \left(\frac{1}{N^2} \right)) \left( \frac{N-2n}{e} \right) ^ {N-2n} \sqrt{2\pi(N-2n)} (1 + \frac{1}{12(N-2n)} + O \left(\frac{1}{(N-2n)^2} \right))} = \\
+= 1 - \frac{\left( \frac{1}{e} \right) ^ {2N - 2n}}{\left( \frac{1}{e} \right) ^ {N + N - 2n}} \cdot \frac{\left( N - n \right) ^ {2N - 2n}}{ N ^ N \left( N - 2n \right) ^ {N - 2n}} \cdot \sqrt{\frac{(N-n)^2}{N(N-2n)}} \cdot \frac{(1 + \frac{1}{12(N-n)} + O \left(\frac{1}{(N-n)^2} \right)) ^ 2}{(1 + \frac{1}{12N} + O \left(\frac{1}{N^2} \right)) (1 + \frac{1}{12(N-2n)} + O \left(\frac{1}{(N-2n)^2} \right))} = \\
+= \bigg \{ \frac{\left( N - n \right) ^ {2N - 2n}}{ N ^ N \left( N - 2n \right) ^ {N - 2n}} = \left( \frac{N^2 -2nN + n^2}{N^2 -2nN} \right) ^ N \cdot \left( \frac{N^2 -4nN + 4n^2}{N^2 -2nN + n^2} \right) ^ n = \left( 1 + \frac{n^2}{N} \cdot \frac{1}{N-2n} \right) ^ N \cdot \\
+\cdot \left( 1 - \frac{2nN - 3n^2}{N^2 -2nN +n^2} \right) ^ n = \left( 1 + \frac{n^2}{N} \cdot \frac{1}{N-2n} \right) ^ N \cdot \left( 1 - \frac{2}{\frac{N}{n^2} n - 1} + \left( \frac{1}{\frac{N}{n^2} n - 1} \right) ^ 2 \right) ^ n = \\
+= \exp \{N \ln \left( 1 + \frac{n^2}{N} \cdot \frac{1}{N-2n} \right) + n \ln \left( 1 - \frac{2}{\frac{N}{n^2} n - 1} + \left( \frac{1}{\frac{N}{n^2} n - 1} \right) ^ 2 \right)\} = \\
+= \big \{ \frac{n^2}{N} \cdot \frac{1}{N-2n} \sim \frac{t}{N - 2 \sqrt{tN}} \xrightarrow{t \ll N} 0, \;\;
+\frac{1}{\frac{N}{n^2} n - 1} \sim \frac{t}{n - t} \xrightarrow{t \ll n} 0 \big \} = \{ \ln (1+\alpha) = \alpha + o \left( \alpha \right) \} = \\
+= \exp \{N \left( \frac{n^2}{N} \cdot \frac{1}{N-2n} + o \left( \frac{1}{N-2 \sqrt{tN}} \right) \right)
++ n \left(- \frac{2}{\frac{N}{n^2} n - 1} + \left( \frac{1}{\frac{N}{n^2} n - 1} \right) ^ 2 + o \left( \frac{1}{n - t} \right) \right)\} = \\
+= \exp \{ \frac{n^2}{N} \cdot \frac{1}{1-2 \frac{n^2}{N} \frac{1}{n}} - \frac{n^2}{N} \cdot \frac{2}{1-\frac{n^2}{N} \frac{1}{n}} - \left( \frac{n^2}{N}\right) ^ 2 \frac{1}{n - 2 \frac{n^2}{N} + (\frac{n^2}{N})^2 \frac{1}{n}} + o \left( \frac{N}{(N - 2 \sqrt{tN})^3} \right) + o \left( \frac{n}{(n - t) ^ 3} \right) \} =
+\end{multline*}
+
+\begin{multline*}
+= \exp \{ \frac{n^2}{N} \cdot \frac{3 \frac{n^2}{N} \frac{1}{n} - 1}{1-3 \frac{n^2}{N} \frac{1}{n} +2 (\frac{n^2}{N})^2 \frac{1}{n^2}} + o \left( 1 \right) \} = \exp \{ - \frac{n^2}{N} \cdot \frac{1 + o(1)}{1 + o(1)} + o \left( 1 \right) \}
+\bigg \} = \\
+= 1 - \exp \{ - \frac{n^2}{N} \cdot \frac{1 + o(1)}{1 + o(1)} + o \left( 1 \right) \} \cdot \\
+\cdot \sqrt{\frac{(N-n)^2}{N(N-2n)}} \cdot \frac{(1 + \frac{1}{12(N-n)} + O \left(\frac{1}{(N-n)^2} \right)) ^ 2}{(1 + \frac{1}{12N} + O \left(\frac{1}{N^2} \right)) (1 + \frac{1}{12(N-2n)} + O \left(\frac{1}{(N-2n)^2} \right))} = \\
+= \big \{ \sqrt{\frac{(N-n)^2}{N(N-2n)}} = \sqrt{1 + \frac{n^2}{N} \frac{1}{N - 2\sqrt{tN}}} = 1 + O(\frac{n^2}{N} \frac{1}{N - 2\sqrt{tN}}) = 1 + o(1) \big \} = \\
+= 1 - \exp \{ - \frac{n^2}{N} \cdot \frac{1 + o(1)}{1 + o(1)} + o \left( 1 \right) \} \cdot (1 + o(1)) \cdot \frac{(1 + \frac{1}{12(N-n)} + O \left(\frac{1}{(N-n)^2} \right)) ^ 2}{(1 + \frac{1}{12N} + O \left(\frac{1}{N^2} \right)) (1 + \frac{1}{12(N-2n)} + O \left(\frac{1}{(N-2n)^2} \right))} = \\
+= 1 - \exp \{ - \frac{n^2}{N} \cdot \frac{1 + o(1)}{1 + o(1)} + o \left( 1 \right) \} \cdot (1 + o(1)) \cdot \frac{(1 + o(1))^2}{(1 + o(1))^2} \xrightarrow{\frac{n^2}{N} \rightarrow t} (1 - e^{-t})(1 + o(1)).
+\end{multline*}
