@@ -1,4 +1,10 @@
 #!/usr/bin/env bash
+mkdir pages
+mkdir pages/eka
+mkdir pages/eka/homework
+mkdir pages/eka/test
+mkdir pages/mok
+
 cd src
 files=($(ls *.tex))
 for file in "${files[@]}"; do
